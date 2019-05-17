@@ -3,6 +3,7 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ag-grid-community/dist/styles/ag-theme-blue";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 .ng-valid[required], .ng-valid.required  {
     border-left: 5px solid #42A948; /* green */
   }

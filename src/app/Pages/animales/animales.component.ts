@@ -31,7 +31,16 @@ export class AnimalesComponent implements OnInit {
   ngOnInit() {
     this.showAlerts();
     this.LoadForm();
+    this.Loading();
   }
+
+  Loading() {
+    this.spinner.show();
+    setTimeout(() => {
+        this.spinner.hide();
+    }, 2500);
+  }
+
 
   LoadForm() {
     this.Frm = new FormGroup({
@@ -39,7 +48,8 @@ export class AnimalesComponent implements OnInit {
       nombrecien: new FormControl('', [Validators.required]),
       descripcion: new FormControl('' , [Validators.required]),
       especies: new FormControl('' , [Validators.required]),
-      tipoanimal: new FormControl('' , [Validators.required])
+      tipoanimal: new FormControl(undefined , [Validators.required]),
+      cuidador: new FormControl(undefined , [Validators.required]),
     });
   }
 
