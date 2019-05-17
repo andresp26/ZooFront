@@ -1,3 +1,58 @@
-<p>
-  home works!
-</p>
+<nav class="navbar navbar-dark fixed-top">
+	<a class="navbar-brand mx-auto" href="#">
+		<img src="../assets/images/claw.png">Zoologico
+	</a>
+</nav>
+
+<div class="video-background">
+	<div class="video-wrap">
+		<div id="video">
+			<video id="bgvid" oncanplay="this.muted=true" autoplay preloaded loop muted playsinline>
+				<source src="../assets/video/ButterflyHero2.mp4" type="video/mp4">
+			</video>
+		</div>
+	</div>
+</div>
+
+<div class="caption text-center">
+	<h1>BIENVENIDO AL ZOO</h1>
+	<a class="btn btn-outline-light btn-lg" href="#information">Vamos a ello</a>
+</div>
+
+
+<div id="information" class="row justify-content-center">
+	<div class="col-md-8 text-center">
+		<h1>Visita el Zoologico</h1>
+		<p class="lead">Conoceras todo acerca de los animales que se encuentran aquí</p>
+		<a class="btn btn-secondary btn-sm" [routerLink]="['/Animales']">Disfruta de la visita</a>
+	</div>
+</div>
+
+<div id="shows" class="row justify-content-cente">
+		<div class="col-md-8 text-left">
+			<h1>Shows</h1>
+			<p class="lead">Disfruta de los increibles shows con nuestros animales</p>
+			<a class="btn btn-secondary btn-sm" [routerLink]="['/Shows']">Conocer Horarios</a>
+		</div>
+		<div class="col-md-2">
+			<div class="polaroid-images">
+				<a href="" title="Shows"><img height="200" src="../assets/images/shows.jpg" alt="Cave" title="Guepardo" /></a>
+			</div>
+		</div>
+</div>
+
+<div id="animales" class="row justify-content-center">
+	<div class="col-md-8 text-center">
+		<h1>Conoce la naturaleza</h1>
+		<p class="lead">Encontraras diversos tipos de animales presentes en el Zoologico</p>
+	</div>
+</div>
+
+<div id="" class="row justify-content-center">
+		<div class="polaroid-images justify-content-center">
+				<a href="" title="Guepardos"><img height="200" src="../assets/images/guepardo.jpg" alt="Cave" title="Guepardo" /></a>
+				<a href="" title="Oso polar"><img height="200" src="../assets/images/polar.jpg" alt="Cave" title="Guepardo" /></a>
+				<a href="" title="Buho"><img height="200" src="../assets/images/buho.jpg" alt="Cave" title="Guepardo" /></a>
+				<a href="" title="Tigre"><img height="200" src="../assets/images/tigre.jpg" alt="Cave" title="Guepardo" /></a>
+		</div>	
+	</div>
