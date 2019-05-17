@@ -34,7 +34,7 @@
                       Especies
                     </label>
                     <select class="form-control" formControlName="especies" required>
-                      <option *ngFor="let item of especieslist" [value]="item">{{item}}</option>
+                      <option *ngFor="let item of especieslist"  [value]="item.Valor">{{item.Nombre}}</option>
                     </select>
               </div>
           </div>
@@ -46,15 +46,23 @@
                       Tipo de Animal
                     </label>
                     <select class="form-control" formControlName="tipoanimal" required>
-                      <option *ngFor="let item of tipoanimallist" [value]="item">{{item}}</option>
+                      <option *ngFor="let item of tipoanimallist" [value]="item.Valor">{{item.Nombre}}</option>
                     </select>
               </div>
-              <div class="col-6">
+              <div class="col-3">
                   <label>
-                      Tipo de Animal
+                      Horario mañana
                     </label>
-                    <select class="form-control" formControlName="tipoanimal" required>
-                      <option *ngFor="let item of tipoanimallist" [value]="item">{{item}}</option>
+                    <select class="form-control" formControlName="horariom" required>
+                      <option *ngFor="let item of horariosmanana"  [value]="item.Valor">{{item.Nombre}}</option>
+                    </select>
+              </div>
+              <div class="col-3">
+                  <label>
+                      Horario Tarde
+                    </label>
+                    <select class="form-control" formControlName="horariot" required>
+                      <option *ngFor="let item of horariostarde"  [value]="item.Valor">{{item.Nombre}}</option>
                     </select>
               </div>
           </div>
@@ -66,7 +74,7 @@
                       Cuidador
                     </label>
                     <select class="form-control" formControlName="cuidador" required>
-                      <option *ngFor="let item of tipoanimallist" [value]="item">{{item}}</option>
+                      <option *ngFor="let item of cuidadores" [value]="item.Valor">{{item.Nombre}}</option>
                     </select>
               </div>
               <div class="col-6">
@@ -84,7 +92,7 @@
   </div>
   <div class="row mx-auto">
     <ag-grid-angular style="width: 70%; height: 500px; " class="ag-theme-blue " [rowData]="rowData"
-      [columnDefs]="columnDefs">
+      [columnDefs]="columnDefs"    [animateRows]="true"   [floatingFilter]="true"  [enableFilter]="true">
     </ag-grid-angular>
   </div>
 </div>
