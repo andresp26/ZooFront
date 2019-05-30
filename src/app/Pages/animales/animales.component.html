@@ -34,7 +34,7 @@
                       Especies
                     </label>
                     <select class="form-control" formControlName="especies" required>
-                      <option *ngFor="let item of especieslist"  [value]="item.Valor">{{item.Nombre}}</option>
+                      <option *ngFor="let item of especieslist"  [value]="item.idEspecie">{{item.nombreEspecie}}</option>
                     </select>
               </div>
           </div>
@@ -46,7 +46,7 @@
                       Tipo de Animal
                     </label>
                     <select class="form-control" formControlName="tipoanimal" required>
-                      <option *ngFor="let item of tipoanimallist" [value]="item.Valor">{{item.Nombre}}</option>
+                      <option *ngFor="let item of tipoanimallist" [value]="item.idTipoAnimal">{{item.nombreTipoAnimal}}</option>
                     </select>
               </div>
               <div class="col-3">
@@ -54,7 +54,7 @@
                       Horario mañana
                     </label>
                     <select class="form-control" formControlName="horariom" required>
-                      <option *ngFor="let item of horariosmanana"  [value]="item.Valor">{{item.Nombre}}</option>
+                      <option *ngFor="let item of horariosmanana"  [value]="item.idHorario">{{item.idHorario.fechaFin}}</option>
                     </select>
               </div>
               <div class="col-3">
@@ -62,7 +62,7 @@
                       Horario Tarde
                     </label>
                     <select class="form-control" formControlName="horariot" required>
-                      <option *ngFor="let item of horariostarde"  [value]="item.Valor">{{item.Nombre}}</option>
+                      <option *ngFor="let item of horariostarde"  [value]="item.idHorario">{{item.idHorario.fechaFin}}</option>
                     </select>
               </div>
           </div>
@@ -74,7 +74,7 @@
                       Cuidador
                     </label>
                     <select class="form-control" formControlName="cuidador" required>
-                      <option *ngFor="let item of cuidadores" [value]="item.Valor">{{item.Nombre}}</option>
+                      <option *ngFor="let item of cuidadores" [value]="item.idCuidador">{{item.idPersona.nombreCompleto}}</option>
                     </select>
               </div>
               <div class="col-6">

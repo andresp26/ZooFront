@@ -3,6 +3,7 @@ import { NumberSymbol } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from 'ngx-alerts';
+import { AnimalService } from 'src/app/services/animal.service';
 
 @Component({
   selector: 'app-animales',
@@ -18,18 +19,15 @@ export class AnimalesComponent implements OnInit {
   horariostarde: any;
   cuidadores: any;
   columnDefs = [
-    { headerName: 'Nombre', field: 'make' },
-    { headerName: 'Nombre Cientifico', field: 'model' },
-    { headerName: 'Descripcion', field: 'price' },
-    { headerName: 'Especies', field: 'price' }
+    { headerName: 'Nombre', field: 'nombre' },
+    { headerName: 'Nombre Cientifico', field: 'nombreCientifico' },
+    { headerName: 'Descripcion', field: 'descripcion' },
+    { headerName: 'Especies', field: 'especie.nombreEspecie' }
   ];
-  rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 }
-  ];
+
+  rowData:any;
   constructor(private spinner: NgxSpinnerService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,private animalesService:AnimalService) { }
 
   ngOnInit() {
     this.showAlerts();
@@ -38,37 +36,13 @@ export class AnimalesComponent implements OnInit {
   }
 
   Loading() {
-    this.tipoanimallist = [{ Valor: 1, Nombre: 'Carnivoros' },
-    { Valor: 2, Nombre: 'Herbívoros' },
-    { Valor: 3, Nombre: 'Roedores' },
-    { Valor: 4, Nombre: 'Primates' },
-    { Valor: 5, Nombre: 'Artrópodos' },
-    { Valor: 6, Nombre: 'Reptiles' },
-    { Valor: 7, Nombre: 'Aves' },
-    { Valor: 8, Nombre: 'Acuáticos' }];
+    this.tipoanimallist = [];
+    this.especieslist  = [];
+    this.horariosmanana = [];
+    this.horariostarde = [];
+    this.cuidadores = [];
+    this.rowData = [];
 
-    this.especieslist  = [{ Valor: 1 , Nombre : 'Mamiferos'},
-    { Valor: 1 , Nombre : 'Aves'},
-    { Valor: 1 , Nombre : 'Reptiles'},
-    { Valor: 1 , Nombre : 'Peces'},
-    { Valor: 1 , Nombre : 'Insectos'},
-    { Valor: 1 , Nombre : 'Caracoles, almejas y pulpos'}];
-
-    this.horariosmanana = [{ Valor: 1 , Nombre: '5:00 am a 6:00 am'},
-    { Valor: 1 , Nombre: '6:00 am a 7:00 am'},
-    { Valor: 1 , Nombre: '7:00 am a 8:00 am'},
-    { Valor: 1 , Nombre: '8:00 am a 9:00 am'},
-    { Valor: 1 , Nombre: '9:00 am a 10:00 am'}];
-
-    this.horariostarde = [{ Valor: 1 , Nombre: '4:00 pm a 5:00 pm'},
-    { Valor: 1 , Nombre: '5:00 pm a 6:00 pm'},
-    { Valor: 1 , Nombre: '6:00 pm a 7:00 pm'}];
-
-    this.cuidadores = [{Valor: 1, Nombre : 'Cuidador 1'},
-    {Valor: 2, Nombre : 'Cuidador 2'},
-    {Valor: 3, Nombre : 'Cuidador 3'},
-    {Valor: 4, Nombre : 'Cuidador 4'},
-    {Valor: 5, Nombre : 'Cuidador 5'}];
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
@@ -77,6 +51,13 @@ export class AnimalesComponent implements OnInit {
 
 
   LoadForm() {
+    //Carga de spinners desde el api
+    this.cargarEspecies();
+    this.cargarTiposAnimales();
+    this.cargarHorarios();
+    this.cargarCuidadores();
+    this.cargarAnimales();
+
     this.Frm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
       nombrecien: new FormControl('', [Validators.required]),
@@ -99,6 +80,45 @@ export class AnimalesComponent implements OnInit {
     } else {
       this.alertService.warning('Debe diligenciar todos los campos');
     }
+  }
+
+  cargarEspecies(){
+    
+    this.animalesService.getSpecies().subscribe(data=>
+      this.especieslist = data
+      );
+  }
+
+  cargarTiposAnimales(){
+    this.animalesService.getTipoAnimal().subscribe(
+      data=> this.tipoanimallist = data
+    );
+  }
+
+  cargarHorarios(){
+    this.animalesService.getHorarios().subscribe(
+      data=> 
+      (this.prepararHorarios(data))
+    );
+  }
+
+  cargarCuidadores(){
+    this.animalesService.getCuidadores().subscribe(
+      data=> 
+      (this.cuidadores = data)
+    );
+  }
+
+  cargarAnimales(){
+    this.animalesService.getAnimales().subscribe(
+      data=> 
+      (this.rowData = data)
+    );
+  }
+
+  prepararHorarios(data:any){
+     this.horariosmanana = data;
+     this.horariostarde = data;
   }
 
 
