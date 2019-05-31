@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { NumberSymbol } from "@angular/common";
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AlertService } from "ngx-alerts";
 import { AnimalService } from "src/app/services/animal.service";
 import { finalize } from "rxjs/operators";
+import { AgGridNg2 } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-animales',
@@ -12,6 +13,9 @@ import { finalize } from "rxjs/operators";
   styleUrls: ['./animales.component.css']
 })
 export class AnimalesComponent implements OnInit {
+
+
+  @ViewChild('Grid') agGrid: AgGridNg2;
   Frm: FormGroup;
   especieslist = [];
   tipoanimallist = [];
@@ -19,6 +23,7 @@ export class AnimalesComponent implements OnInit {
   horariostarde = [];
   cuidadores = [];
   date: Date = new Date();
+  editar = false;
   settings = {
     bigBanner: false,
     timePicker: true,
@@ -29,7 +34,9 @@ export class AnimalesComponent implements OnInit {
     { headerName: 'Nombre', field: 'nombre' },
     { headerName: 'Nombre Cientifico', field: 'nombreCientifico' },
     { headerName: 'Descripcion', field: 'descripcion' },
-    { headerName: 'Especies', field: 'especie.nombreEspecie' }
+    { headerName: 'Cuidador', field: 'cuidador.idPersona.nombreCompleto' },
+    { headerName: 'Especie', field: 'especie.nombreEspecie' },
+    { headerName: 'Tipo Animal', field: 'tipoAnimal.nombreTipoAnimal' } 
   ];
 
   rowData: any;
@@ -40,7 +47,6 @@ export class AnimalesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.showAlerts();
     this.LoadForm();
     this.LoadInfo();
   }
@@ -50,12 +56,51 @@ export class AnimalesComponent implements OnInit {
       nombre: new FormControl('', [Validators.required]),
       nombrecien: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required]),
-      especies: new FormControl('', [Validators.required]),
+      especies: new FormControl(undefined, [Validators.required]),
       tipoanimal: new FormControl(undefined, [Validators.required]),
-      cuidador: new FormControl(undefined, [Validators.required]),
-      horariom: new FormControl(undefined, [Validators.required]),
-      horariot: new FormControl(undefined, [Validators.required])
+      cuidador: new FormControl(undefined, [Validators.required])
     });
+  }
+
+
+  Editar() {
+    try {
+      const objEdit = this.agGrid.api.getSelectedRows();
+      if (objEdit.length > 0) {
+        this.Frm.controls.nombre.setValue(objEdit[0].nombre);
+        this.Frm.controls.nombrecien.setValue(objEdit[0].nombreCientifico);
+        this.Frm.controls.descripcion.setValue(objEdit[0].descripcion);
+        this.Frm.controls.especies.setValue(objEdit[0].especie);
+        this.Frm.controls.tipoanimal.setValue(objEdit[0].tipoAnimal);
+        this.Frm.controls.cuidador.setValue(objEdit[0].cuidador);
+      }
+    } catch (error) {
+
+    }
+  }
+
+  EditarAnimal() {
+    if (this.Frm.valid) {
+      const Animal = {
+        nombre: this.Frm.controls.nombre.value,
+        nombreCientifico: this.Frm.controls.nombrecien.value,
+        descripcion: this.Frm.controls.descripcion.value,
+        especie: this.Frm.controls.especies.value,
+        tipoAnimal: this.Frm.controls.tipoanimal.value,
+        cuidador: this.Frm.controls.cuidador.value
+      };
+      console.log(Animal);
+      this.spinner.show();
+      this.animalesService.SetAnimal(Animal).subscribe(data => {
+        console.log(data);
+        this.alertService.success('Operacion Exitosa');
+        this.LoadInfo();
+        this.Frm.reset();
+        this.spinner.hide();
+      });
+    } else {
+      this.alertService.warning('Debe diligenciar todos los campos');
+    }
   }
 
   LoadInfo() {
@@ -64,10 +109,6 @@ export class AnimalesComponent implements OnInit {
     this.cargarHorarios();
     this.cargarCuidadores();
     this.cargarAnimales();
-  }
-
-  showAlerts(): void {
-    this.alertService.success('this is a success alert');
   }
 
   GuardarAnimal() {
@@ -81,6 +122,7 @@ export class AnimalesComponent implements OnInit {
           tipoAnimal: this.Frm.controls.tipoanimal.value,
           cuidador: this.Frm.controls.cuidador.value
         };
+        console.log(Animal);
         this.spinner.show();
         this.animalesService.SetAnimal(Animal).subscribe(data => {
           console.log(data);
@@ -150,6 +192,7 @@ export class AnimalesComponent implements OnInit {
       .subscribe(
         (data: []) => {
           console.log('Animales');
+          console.log(data);
           this.rowData = data;
         },
         (error: any) => {

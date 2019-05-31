@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AnimalService {
   constructor(private httpClient: HttpClient) {}
 
+  
   getBaseQuery(query: string) {
     const baseQuery = `http://localhost:8080/Zoo/api/${query}`;
     return baseQuery;
@@ -40,4 +41,13 @@ export class AnimalService {
   SetAnimal(Animal: any) {
     return this.httpClient.post('http://localhost:8080/Zoo/api/animal' ,  Animal , {});
   }
+
+  UpdateAnimal(Animal: any , id: number) {
+    return this.httpClient.put('http://localhost:8080/Zoo/api/animal' ,  Animal , {});
+  }
+
+  // DelAnimal(Animal: any , id: number) {
+  //   return this.httpClient.delete('http://localhost:8080/Zoo/api/animal' , Animal ,
+  //   param: id, {});
+  // }
 }

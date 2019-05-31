@@ -32,10 +32,7 @@
                   <label>
                       Especies
                     </label>
-                    <ng-select class="custom" required  [items]="especieslist" bindLabel="nombreEspecie" placeholder="'Seleccione'" formControlName="especies"></ng-select>
-                    <!-- <select class="form-control" formControlName="especies" required>
-                      <option *ngFor="let item of especieslist"  [value]="item.idEspecie">{{item.nombreEspecie}}</option>
-                    </select> -->
+                    <ng-select class="custom" required  [items]="especieslist" bindLabel="nombreEspecie" placeholder="'Seleccione'" formControlName="especies"></ng-select>                  
               </div>
           </div>
       </div>
@@ -44,10 +41,8 @@
               <div class="col-6">
                   <label>
                       Tipo de Animal
-                    </label>
-                    <select class="form-control" formControlName="tipoanimal" required>
-                      <option *ngFor="let item of tipoanimallist" [value]="item.idTipoAnimal">{{item.nombreTipoAnimal}}</option>
-                    </select>
+                    </label>                
+                    <ng-select class="custom" required  [items]="tipoanimallist" bindLabel="nombreTipoAnimal" placeholder="'Seleccione'" formControlName="tipoanimal"></ng-select>  
               </div>
           </div>
       </div>
@@ -57,9 +52,10 @@
                   <label>
                       Cuidador
                     </label>
-                    <select class="form-control" formControlName="cuidador" required>
+                    <!-- <select class="form-control" formControlName="cuidador" required>
                       <option *ngFor="let item of cuidadores" [value]="item.idCuidador">{{item.idPersona.nombreCompleto}}</option>
-                    </select>
+                    </select> -->
+                    <ng-select class="custom" required  [items]="cuidadores" bindLabel="idPersona.nombreCompleto" placeholder="'Seleccione'" formControlName="cuidador"></ng-select> 
               </div>
               <div class="col-6">
               
@@ -68,15 +64,18 @@
           </div>
       </div>    
       <div class="form-group">
-        <button class="btn btn-primary" (click)="GuardarAnimal()">
+        <button class="btn btn-primary" *ngIf="!editar" (click)="GuardarAnimal()">
           Guardar Animal <span class="badge badge-primary"></span>
+        </button>
+        <button class="btn btn-primary" *ngIf="editar" (click)="EditarAnimal()">
+          Modificar Animal <span class="badge badge-primary"></span>
         </button>
       </div>
     </form>
   </div>
   <div class="row mx-auto">
-    <ag-grid-angular style="width: 70%; height: 500px; " class="ag-theme-blue " [rowData]="rowData"
-      [columnDefs]="columnDefs"    [animateRows]="true"   [floatingFilter]="true"  [enableFilter]="true">
+    <ag-grid-angular style="width: 100%; height: 500px; " class="ag-theme-blue " [rowData]="rowData"
+      [columnDefs]="columnDefs" rowSelection="single"  #Grid  (rowDoubleClicked)="Editar()"  [animateRows]="true"   [floatingFilter]="true"  [enableFilter]="true">
     </ag-grid-angular>
   </div>
 </div>
