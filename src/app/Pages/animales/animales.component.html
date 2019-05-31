@@ -1,6 +1,5 @@
 <div class="container">
   <div clas="row ">
-    
     <form [formGroup]="Frm" class="mt-5 shadow p-3 mb-5 bg-white rounded">
       <h3>Gestion de Animales</h3>
       <hr>
@@ -33,9 +32,10 @@
                   <label>
                       Especies
                     </label>
-                    <select class="form-control" formControlName="especies" required>
+                    <ng-select class="custom" required  [items]="especieslist" bindLabel="nombreEspecie" placeholder="'Seleccione'" formControlName="especies"></ng-select>
+                    <!-- <select class="form-control" formControlName="especies" required>
                       <option *ngFor="let item of especieslist"  [value]="item.idEspecie">{{item.nombreEspecie}}</option>
-                    </select>
+                    </select> -->
               </div>
           </div>
       </div>
@@ -53,17 +53,18 @@
                   <label>
                       Horario mañana
                     </label>
-                    <select class="form-control" formControlName="horariom" required>
+                    <!-- <select class="form-control" formControlName="horariom" required>
                       <option *ngFor="let item of horariosmanana"  [value]="item.idHorario">{{item.idHorario.fechaFin}}</option>
-                    </select>
+                    </select> -->
+                    <angular2-date-picker [(ngModel)]="date" 
+                     formControlName="horariom" [settings]="settings"></angular2-date-picker>
               </div>
               <div class="col-3">
                   <label>
                       Horario Tarde
                     </label>
-                    <select class="form-control" formControlName="horariot" required>
-                      <option *ngFor="let item of horariostarde"  [value]="item.idHorario">{{item.idHorario.fechaFin}}</option>
-                    </select>
+                    <angular2-date-picker 
+                    formControlName="horariot" [settings]="settings"></angular2-date-picker>
               </div>
           </div>
       </div>

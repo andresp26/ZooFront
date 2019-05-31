@@ -16,20 +16,22 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // Import your library
 import { AlertModule } from 'ngx-alerts';
 import { AgGridModule } from 'ag-grid-angular';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
- 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AnimalesComponent,  
+    AnimalesComponent,
     ShowsComponent,
     NavBarComponent
-    
   ],
   imports: [
     BrowserAnimationsModule,
+    NgSelectModule,
+    AngularDateTimePickerModule,
     AgGridModule.withComponents([]),
     BrowserModule,
     FormsModule,

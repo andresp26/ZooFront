@@ -1,9 +1,55 @@
 <div class="container">
   <div class="row">
-    
+    <form [formGroup]="frm" class="mt-5 shadow p-3 mb-5 bg-white rounded was-validated">
+      <h3>Shows</h3>
+      <hr>
+      <div class="form-group ">
+        <div class="row">
+            <div class="col-6">
+                <label>
+                    Nombre
+                  </label>
+                  <input type="text" class="form-control" required formControlName="nombre"  >
+            </div>
+            <div class="col-6">
+                <label>
+                    Animales Show
+                  </label>
+                  <ng-select class="custom" required [multiple]="true" placeholder="'Seleccione'" formControlName="selanimal"  ></ng-select>
+              </div>
+        </div>       
+      </div>
+      <div class="form-group">
+          <div class="row">
+              <div class="col-6">
+                <label>
+                  Horarios Presentacion
+                </label>
+                <ng-select class="custom" required [multiple]="true" placeholder="'Seleccione'" formControlName="horarios"  ></ng-select>
+              </div>
+              <div class="col-6">
+                <label>
+                  Persona Encargada
+                </label>
+                <ng-select class="custom" required [multiple]="true" placeholder="'Seleccione'"  formControlName="persona" ></ng-select>
+              </div>
+          </div>
+      </div>   
+      <div class="form-group">
+        <label>
+          Lugar 
+        </label>
+        <ng-select class="custom ng-valid" required [multiple]="true" placeholder="'Seleccione'" formControlName="lugar" ></ng-select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">
+          Crear Show <span class="badge badge-primary"></span>
+        </button>
+      </div>
+    </form>
   </div>
   <div class="row">
-      <ag-grid-angular style="width: 70%; height: 500px; " class="ag-theme-blue " [rowData]="rowData"
+      <ag-grid-angular style="width: 70%; height: 500px; " class="ag-theme-blue " 
       [animateRows]="true"   [floatingFilter]="true"  [enableFilter]="true"
       [columnDefs]="columnDefs">
     </ag-grid-angular>

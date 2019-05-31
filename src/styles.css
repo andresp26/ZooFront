@@ -1,14 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
-
+@import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 @import "~ag-grid-community/dist/styles/ag-theme-blue";
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 .ng-valid[required], .ng-valid.required  {
     border-left: 5px solid #42A948; /* green */
-  }
+}
   .ng-invalid:not(form)  {
     border-left: 5px solid #a94442; /* red */
-  }
+}
 
+ 
+
+  .ng-select.custom {
+    border:0px;
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 0;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'ngx-alerts';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-shows',
@@ -9,6 +10,7 @@ import { AlertService } from 'ngx-alerts';
 })
 export class ShowsComponent implements OnInit {
 
+  frm: FormGroup;
   columnDefs = [
     {headerName: 'Nombre', field: 'make' },
     {headerName: 'Nombre Cientifico', field: 'model' },
@@ -20,6 +22,18 @@ export class ShowsComponent implements OnInit {
 
   ngOnInit() {
     this.Loading();
+    this.LoadForm();
+  }
+
+
+  LoadForm() {
+    this.frm = new FormGroup({
+      nombre: new FormControl('', [Validators.required]),
+      selanimal: new FormControl(undefined, [Validators.required]),
+      horarios: new FormControl(undefined, [Validators.required]),
+      persona: new FormControl(undefined, [Validators.required]),
+      lugar: new FormControl(undefined, [Validators.required]),
+    });
   }
 
   Loading() {
