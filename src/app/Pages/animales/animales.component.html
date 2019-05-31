@@ -49,23 +49,6 @@
                       <option *ngFor="let item of tipoanimallist" [value]="item.idTipoAnimal">{{item.nombreTipoAnimal}}</option>
                     </select>
               </div>
-              <div class="col-3">
-                  <label>
-                      Horario mañana
-                    </label>
-                    <!-- <select class="form-control" formControlName="horariom" required>
-                      <option *ngFor="let item of horariosmanana"  [value]="item.idHorario">{{item.idHorario.fechaFin}}</option>
-                    </select> -->
-                    <angular2-date-picker [(ngModel)]="date" 
-                     formControlName="horariom" [settings]="settings"></angular2-date-picker>
-              </div>
-              <div class="col-3">
-                  <label>
-                      Horario Tarde
-                    </label>
-                    <angular2-date-picker 
-                    formControlName="horariot" [settings]="settings"></angular2-date-picker>
-              </div>
           </div>
       </div>
       <div class="form-group">

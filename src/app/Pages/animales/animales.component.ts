@@ -81,12 +81,13 @@ export class AnimalesComponent implements OnInit {
           tipoAnimal: this.Frm.controls.tipoanimal.value,
           cuidador: this.Frm.controls.cuidador.value
         };
-
+        this.spinner.show();
         this.animalesService.SetAnimal(Animal).subscribe(data => {
           console.log(data);
           this.alertService.success('Operacion Exitosa');
           this.LoadInfo();
           this.Frm.reset();
+          this.spinner.hide();
         });
       } else {
         this.alertService.warning('Debe diligenciar todos los campos');
