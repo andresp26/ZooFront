@@ -39,7 +39,7 @@ export class AnimalService {
   }
 
   SetAnimal(Animal: any) {
-    return this.httpClient.post('http://localhost:8080/Zoo/api/animal' ,  Animal , {});
+    return this.httpClient.post('http://localhost:8080/Zoo/api/animales' ,  Animal , {});
   }
 
   UpdateAnimal(Animal: any , id: number) {

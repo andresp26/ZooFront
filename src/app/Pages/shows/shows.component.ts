@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'ngx-alerts';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { ShowService } from 'src/app/services/show.service';
+import { AnimalService } from 'src/app/services/animal.service';
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: 'app-shows',
@@ -25,12 +28,19 @@ export class ShowsComponent implements OnInit {
     closeOnSelect: true
   };
   constructor(private spinner: NgxSpinnerService,
-              private alertService: AlertService) { }
-
+              private alertService: AlertService, private showService:ShowService, private animalesService: AnimalService) { }
   ngOnInit() {
     this.Loading();
     this.LoadForm();
+    this.loadData();
   }
+
+  loadData(){
+    this.cargarAnimales();
+    this.cargarShows();
+    this.cargarLugares();
+  }
+
 
 
   LoadForm() {
@@ -49,6 +59,71 @@ export class ShowsComponent implements OnInit {
     setTimeout(() => {
         this.spinner.hide();
     }, 2500);
+  }
+
+  cargarAnimales() {
+    this.animalesService
+      .getAnimales()
+      .pipe(
+        finalize(() => {
+          // ocultar ventana de carga
+          this.spinner.hide();
+        })
+      )
+      .subscribe(
+        (data: []) => {
+          console.log('Animales');
+          console.log(data);
+          
+        },
+        (error: any) => {
+          this.alertService.danger(error.message);
+        }
+      );
+  }
+
+  cargarShows(){
+    this.showService
+    .getAllShows()
+    .pipe(
+      finalize(() => {
+        // ocultar ventana de carga
+        this.spinner.hide();
+      })
+    )
+    .subscribe(
+      (data: []) => {
+        console.log('shows');
+        console.log(data);
+        
+      },
+      (error: any) => {
+        this.alertService.danger(error.message);
+      }
+    );
+
+  }
+
+  cargarLugares(){
+    this.showService
+    .getLugares()
+    .pipe(
+      finalize(() => {
+        // ocultar ventana de carga
+        this.spinner.hide();
+      })
+    )
+    .subscribe(
+      (data: []) => {
+        console.log('lugares');
+        console.log(data);
+        
+      },
+      (error: any) => {
+        this.alertService.danger(error.message);
+      }
+    );
+
   }
 
 }
