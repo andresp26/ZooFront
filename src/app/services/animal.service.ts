@@ -39,15 +39,18 @@ export class AnimalService {
   }
 
   SetAnimal(Animal: any) {
-    return this.httpClient.post('http://localhost:8080/Zoo/api/animal' ,  Animal , {});
+    return this.httpClient.post('http://localhost:8080/Zoo/api/animales' ,  Animal , {});
   }
 
   UpdateAnimal(Animal: any , id: number) {
-    return this.httpClient.put('http://localhost:8080/Zoo/api/animal' ,  Animal , {});
+    const param = {
+      id: id ? id.toString() : '',
+      Animales: Animal
+    };
+    return this.httpClient.put('http://localhost:8080/Zoo/api/animales' , param , {});
   }
 
-  // DelAnimal(Animal: any , id: number) {
-  //   return this.httpClient.delete('http://localhost:8080/Zoo/api/animal' , Animal ,
-  //   param: id, {});
-  // }
+  DelAnimal(AnimalesId: number) {
+    return this.httpClient.delete(`http://localhost:8080/Zoo/api/animales/${AnimalesId}`);
+  }
 }

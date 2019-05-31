@@ -37,3 +37,12 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     border-radius: 0;
 }
  
+
+.navbar{
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.navbar-brand img{
+  height: 2rem;
+
+}

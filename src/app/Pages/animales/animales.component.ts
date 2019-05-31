@@ -67,6 +67,7 @@ export class AnimalesComponent implements OnInit {
     try {
       const objEdit = this.agGrid.api.getSelectedRows();
       if (objEdit.length > 0) {
+        this.editar = true;
         this.Frm.controls.nombre.setValue(objEdit[0].nombre);
         this.Frm.controls.nombrecien.setValue(objEdit[0].nombreCientifico);
         this.Frm.controls.descripcion.setValue(objEdit[0].descripcion);
@@ -80,27 +81,53 @@ export class AnimalesComponent implements OnInit {
   }
 
   EditarAnimal() {
-    if (this.Frm.valid) {
-      const Animal = {
-        nombre: this.Frm.controls.nombre.value,
-        nombreCientifico: this.Frm.controls.nombrecien.value,
-        descripcion: this.Frm.controls.descripcion.value,
-        especie: this.Frm.controls.especies.value,
-        tipoAnimal: this.Frm.controls.tipoanimal.value,
-        cuidador: this.Frm.controls.cuidador.value
-      };
-      console.log(Animal);
-      this.spinner.show();
-      this.animalesService.SetAnimal(Animal).subscribe(data => {
-        console.log(data);
-        this.alertService.success('Operacion Exitosa');
-        this.LoadInfo();
-        this.Frm.reset();
-        this.spinner.hide();
-      });
-    } else {
-      this.alertService.warning('Debe diligenciar todos los campos');
+    try {
+      const objEdit = this.agGrid.api.getSelectedRows();
+      if (this.Frm.valid && objEdit.length > 0 ) {
+        const Animal = {
+          nombre: this.Frm.controls.nombre.value,
+          nombreCientifico: this.Frm.controls.nombrecien.value,
+          descripcion: this.Frm.controls.descripcion.value,
+          especie: this.Frm.controls.especies.value,
+          tipoAnimal: this.Frm.controls.tipoanimal.value,
+          cuidador: this.Frm.controls.cuidador.value
+        };
+        console.log(Animal);
+        this.spinner.show();
+        this.animalesService.UpdateAnimal(Animal, objEdit[0].idAnimal).subscribe(data => {
+          console.log(data);
+          this.alertService.success('Operacion Exitosa');
+          this.LoadInfo();
+          this.Frm.reset();
+          this.spinner.hide();
+          this.editar = false;
+        });
+      } else {
+        this.alertService.warning('Debe diligenciar todos los campos');
+      }
+    } catch (error) {
     }
+  }
+
+  Eliminar() {
+    try {
+      const objEdit = this.agGrid.api.getSelectedRows();
+      if (objEdit.length > 0 ) {
+        this.spinner.show();
+        this.animalesService.DelAnimal(objEdit[0].idAnimal).subscribe(data => {
+          console.log(data);
+          this.alertService.success('Operacion Exitosa');
+          this.LoadInfo();
+          this.Frm.reset();
+          this.spinner.hide();
+          this.editar = false;
+        });
+      } else {
+        this.alertService.warning('Debe seleccionar un animal');
+      }
+    } catch (error) {
+    }
+
   }
 
   LoadInfo() {
@@ -194,6 +221,7 @@ export class AnimalesComponent implements OnInit {
           console.log('Animales');
           console.log(data);
           this.rowData = data;
+          this.editar = false;
         },
         (error: any) => {
           this.alertService.danger(error.message);
