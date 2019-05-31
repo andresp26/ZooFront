@@ -1,5 +1,10 @@
+<nav class="navbar navbar-dark fixed-top">
+	<a class="navbar-brand mx-auto" href="#">
+		<img src="../assets/images/claw.png">Zoologico
+	</a>
+</nav>
 <div class="container">
-  <div class="row">
+  <div class="">
     <form [formGroup]="frm" class="mt-5 shadow p-3 mb-5 bg-white rounded was-validated">
       <h3>Shows</h3>
       <hr>
@@ -7,7 +12,7 @@
         <div class="row">
             <div class="col-6">
                 <label>
-                    Nombre
+                    Descripcion
                   </label>
                   <input type="text" class="form-control" required formControlName="nombre"  >
             </div>
@@ -15,36 +20,43 @@
                 <label>
                     Animales Show
                   </label>
-                  <ng-select class="custom" required [multiple]="true" placeholder="'Seleccione'" formControlName="selanimal" ></ng-select>
+                  <ng-select class="custom" required [items]="animalesList" [multiple]="true" placeholder="'Seleccione'"  bindLabel="nombre" formControlName="selanimal" ></ng-select>
               </div>
         </div>       
       </div>
       <div class="form-group">
           <div class="row">
-            <div class="col-3">
+            <div class="col-6">
               <label>
-                  Horario mañana
+                  Horarios
                 </label>
+                <ng-select class="custom" required  [items]="horariosList" bindLabel="horarioNombre" placeholder="'Seleccione'" formControlName="horario"></ng-select>
                 <!-- <select class="form-control" formControlName="horariom" required>
                   <option *ngFor="let item of horariosmanana"  [value]="item.idHorario">{{item.idHorario.fechaFin}}</option>
                 </select> -->
-                <angular2-date-picker  [(ngModel)]="date" formControlName="horariom"
+                <!-- <angular2-date-picker  [(ngModel)]="date" formControlName="horariom"
+                  [settings]="settings"></angular2-date-picker> -->
+          </div>
+            <!-- <div class="col-3">
+                <label>
+                    Horario Tarde
+                  </label>
+                  <angular2-date-picker [(ngModel)]="date"   formControlName="horariot"
                   [settings]="settings"></angular2-date-picker>
-          </div>
-          <div class="col-3">
-              <label>
-                  Horario Tarde
-                </label>
-                <angular2-date-picker [(ngModel)]="date"   formControlName="horariot"
-                [settings]="settings"></angular2-date-picker>
-          </div>
+            </div> -->
           </div>
       </div>   
       <div class="form-group">
         <label>
           Lugar 
         </label>
-        <ng-select class="custom ng-valid" required [multiple]="true" placeholder="'Seleccione'" formControlName="lugar" ></ng-select>
+        <ng-select class="custom ng-valid" required [items]="lugaresList" bindLabel="nombreLugar" placeholder="'Seleccione'" formControlName="lugar" ></ng-select>
+      </div>
+      <div class="form-group">
+        <label>
+          Persona encargada 
+        </label>
+        <ng-select class="custom ng-valid" required [items]="cuidadoresList" bindLabel="idPersona.nombreCompleto"   placeholder="'Seleccione'" formControlName="persona" ></ng-select>
       </div>
       <div class="form-group">
         <button class="btn btn-primary">
@@ -54,8 +66,8 @@
     </form>
   </div>
   <div class="row">
-      <ag-grid-angular style="width: 70%; height: 500px; " class="ag-theme-blue " 
-      [animateRows]="true"   [floatingFilter]="true"  [enableFilter]="true"
+      <ag-grid-angular style="width: 100%; height: 500px; " class="ag-theme-blue " 
+      [animateRows]="true"   [floatingFilter]="true" #ShowsGrid  [enableFilter]="true" [rowData]="rowData"
       [columnDefs]="columnDefs">
     </ag-grid-angular>
     </div>

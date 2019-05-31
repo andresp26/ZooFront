@@ -23,4 +23,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
         return this.httpClient.get(url);
     }
 
-  }
+    getHorarios() {
+        const url = this.getBaseQuery('horario');
+        return this.httpClient.get(url);
+      }
+
+}

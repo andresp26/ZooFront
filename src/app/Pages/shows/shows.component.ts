@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'ngx-alerts';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ShowService } from 'src/app/services/show.service';
 import { AnimalService } from 'src/app/services/animal.service';
 import { finalize } from "rxjs/operators";
+import { AgGridNg2 } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-shows',
@@ -13,13 +14,21 @@ import { finalize } from "rxjs/operators";
 })
 export class ShowsComponent implements OnInit {
 
+  @ViewChild('ShowsGrid') agGrid: AgGridNg2;
+  animalesList = [];
+  horariosList=[];
+  lugaresList = [];
+  cuidadoresList=[];
+  rowData= [];
   frm: FormGroup;
   date: Date = new Date();
   columnDefs = [
-    {headerName: 'Nombre', field: 'make' },
-    {headerName: 'Nombre Cientifico', field: 'model' },
-    {headerName: 'Descripcion', field: 'price'},
-    {headerName: 'Especies', field: 'price'}
+    {headerName: 'Nombre', field:'idShow.nombre' },
+    {headerName: 'Animal', field: 'idAnimal.nombre' },
+    {headerName: 'Hora Inicio', field: 'idShow.horario.fechaInicio'},
+    {headerName: 'Hora Final', field: 'idShow.horario.fechaFin'},
+    {headerName: 'Lugar', field: 'idShow.lugar.nombreLugar'},
+    {headerName: 'Encargado', field: 'idShow.personaEncargada.nombreCompleto'}
   ];
   settings = {
     bigBanner: false,
@@ -39,6 +48,8 @@ export class ShowsComponent implements OnInit {
     this.cargarAnimales();
     this.cargarShows();
     this.cargarLugares();
+    this.cargarCuidadores();
+    this.cargarHorarios();
   }
 
 
@@ -47,8 +58,9 @@ export class ShowsComponent implements OnInit {
     this.frm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
       selanimal: new FormControl(undefined, [Validators.required]),
-      horariom: new FormControl(undefined, [Validators.required]),
-      horariot: new FormControl(undefined, [Validators.required]),
+      horario: new FormControl(undefined,[Validators.required]),
+      // horariom: new FormControl(undefined, [Validators.required]),
+      // horariot: new FormControl(undefined, [Validators.required]),
       persona: new FormControl(undefined, [Validators.required]),
       lugar: new FormControl(undefined, [Validators.required]),
     });
@@ -74,6 +86,7 @@ export class ShowsComponent implements OnInit {
         (data: []) => {
           console.log('Animales');
           console.log(data);
+          this.animalesList = data;
           
         },
         (error: any) => {
@@ -95,7 +108,31 @@ export class ShowsComponent implements OnInit {
       (data: []) => {
         console.log('shows');
         console.log(data);
-        
+        this.rowData = data;
+      
+      },
+      (error: any) => {
+        this.alertService.danger(error.message);
+      }
+    );
+
+  }
+
+  cargarHorarios(){
+    this.showService
+    .getHorarios()
+    .pipe(
+      finalize(() => {
+        // ocultar ventana de carga
+        this.spinner.hide();
+      })
+    )
+    .subscribe(
+      (data: []) => {
+        console.log('horarios');
+        console.log(data);
+        this.horariosList = data;
+      
       },
       (error: any) => {
         this.alertService.danger(error.message);
@@ -117,13 +154,21 @@ export class ShowsComponent implements OnInit {
       (data: []) => {
         console.log('lugares');
         console.log(data);
-        
+        this.lugaresList = data;  
       },
       (error: any) => {
         this.alertService.danger(error.message);
       }
     );
 
+  }
+
+  cargarCuidadores() {
+    this.animalesService.getCuidadores().subscribe((data: []) => {
+      console.log('Cuidadores');
+      console.log(data);
+      this.cuidadoresList = data;
+    });
   }
 
 }
