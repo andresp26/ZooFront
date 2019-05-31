@@ -1,3 +1,8 @@
+<nav class="navbar navbar-dark fixed-top">
+	<a class="navbar-brand mx-auto" href="#">
+		<img src="../assets/images/claw.png">Zoologico
+	</a>
+</nav>
 <div class="container">
   <div clas="row ">
     <form [formGroup]="Frm" class="mt-5 shadow p-3 mb-5 bg-white rounded">
@@ -51,25 +56,23 @@
               <div class="col-6">
                   <label>
                       Cuidador
-                    </label>
-                    <!-- <select class="form-control" formControlName="cuidador" required>
-                      <option *ngFor="let item of cuidadores" [value]="item.idCuidador">{{item.idPersona.nombreCompleto}}</option>
-                    </select> -->
+                    </label>                    
                     <ng-select class="custom" required  [items]="cuidadores" bindLabel="idPersona.nombreCompleto" placeholder="'Seleccione'" formControlName="cuidador"></ng-select> 
               </div>
               <div class="col-6">
-              
                 </div>
-            
           </div>
       </div>    
       <div class="form-group">
         <button class="btn btn-primary" *ngIf="!editar" (click)="GuardarAnimal()">
           Guardar Animal <span class="badge badge-primary"></span>
         </button>
+        <button class="ml-1 btn btn-danger" (click)="Eliminar()">
+          Eliminar Animal <span class="badge badge-primary"></span>
+        </button>
         <button class="btn btn-primary" *ngIf="editar" (click)="EditarAnimal()">
           Modificar Animal <span class="badge badge-primary"></span>
-        </button>
+        </button> 
       </div>
     </form>
   </div>
